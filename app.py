@@ -1,10 +1,4 @@
 import streamlit as st
-
-st.title("Wine Quality Multiclass Classification")
-st.write("Streamlit app setup successful!")
-
-
-import streamlit as st
 import pandas as pd
 import numpy as np
 
@@ -28,7 +22,6 @@ from sklearn.ensemble import RandomForestClassifier
 # PAGE CONFIG
 # --------------------------------------------------
 st.set_page_config(page_title="Wine Quality Classification", layout="centered")
-
 st.title("🍷 Wine Quality Classification App")
 
 st.write(
@@ -45,17 +38,32 @@ uploaded_file = st.file_uploader(
 )
 
 if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file, sep=";")
-    df.columns = df.columns.str.strip()
- 
+
+    # 🔥 ROBUST CSV READING (FIXES YOUR ERROR)
+    df = pd.read_csv(uploaded_file, sep=None, engine="python")
+    df.columns = df.columns.str.strip()  # remove hidden spaces
+
+    # DEBUG DISPLAY (safe to keep for exam)
+    st.write("Detected columns:", df.columns.tolist())
+
+    # SAFETY CHECK
+    if "quality" not in df.columns:
+        st.error(
+            "❌ 'quality' column not found.\n\n"
+            "Please upload a CSV with the same columns as winequality-red.csv."
+        )
+        st.stop()
+
     st.subheader("📄 Uploaded Dataset Preview")
     st.dataframe(df.head())
 
-    # Split features and target
+    # --------------------------------------------------
+    # FEATURE / TARGET SPLIT
+    # --------------------------------------------------
     X = df.drop("quality", axis=1)
     y = df["quality"]
 
-    # Scale features
+    # Feature scaling
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
@@ -117,11 +125,8 @@ if uploaded_file is not None:
     # (d) CONFUSION MATRIX / CLASSIFICATION REPORT
     # --------------------------------------------------
     st.subheader("🧩 Confusion Matrix")
-
     cm = confusion_matrix(y, y_pred)
-    cm_df = pd.DataFrame(cm)
-
-    st.dataframe(cm_df)
+    st.dataframe(pd.DataFrame(cm))
 
     st.subheader("📋 Classification Report")
     st.text(classification_report(y, y_pred))
