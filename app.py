@@ -46,6 +46,9 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file, sep=";")
+   #temp code added
+    st.write("Columns found:", df.columns.tolist())
+    #temp code end
 
     st.subheader("📄 Uploaded Dataset Preview")
     st.dataframe(df.head())
