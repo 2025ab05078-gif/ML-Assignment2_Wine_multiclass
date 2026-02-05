@@ -28,14 +28,6 @@ Source: UCI Machine Learning Repository / Kaggle.
 | XGBoost             | 0.6531   | 0.6480    | 0.6531 | 0.6434   | 0.4453 | 0.8153 |
 
 
-                     Accuracy  Precision  Recall  F1 Score     MCC     AUC
-Logistic Regression    0.5906     0.5695  0.5906    0.5673  0.3250  0.7555
-Decision Tree          0.6094     0.6121  0.6094    0.6095  0.3982  0.6991
-KNN                    0.6094     0.5841  0.6094    0.5959  0.3733  0.7476
-Naive Bayes            0.5625     0.5745  0.5625    0.5681  0.3299  0.7377
-Random Forest          0.6750     0.6504  0.6750    0.6603  0.4768  0.8381
-XGBoost                0.6531     0.6480  0.6531    0.6434  0.4453  0.8153
-
 ---
 
 ## d. Model Observations
